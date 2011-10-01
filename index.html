@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Twitter</title>
+
+    <link rel="stylesheet" href="resources/css/application.css" type="text/css">
+</head>
+<body>
+    <!--
+        This is your development file. This should load the debug versions of third party library, and load
+        your application file by file (the Sencha Command generators help automate this). See deploy/index.html
+        for the production version of this file
+     -->
+
+    <script type="text/javascript" src="lib/sencha-touch.js"></script>
+
+    <div id="sencha-app">
+        <script type="text/javascript" src="app/routes.js"></script>
+        <script type="text/javascript" src="app/app.js"></script>
+
+        <!-- Place your view files here -->
+        <div id="sencha-views">
+            <script src="app/jquery-1.6.4.min.js"></script>
+<script>
+$(document).ready(function(){
+	 	var boxWidth = 20
+	 	var boxHeight = 20
+	 	var windowHeight = $(window).height();
+	 	var windowWidth = $(window).width();
+		$('.box').css({height:windowHeight-4, width:windowWidth-4});
+		$('.target').css({left:windowWidth-80});
+	 	//var windowHeight = 300;
+	 	//var windowWidth = 300;
+		var speed = 1;
+		var boxMaxLeft = windowWidth - boxWidth
+		var boxMaxbottom = windowHeight - boxHeight
+		var targetTop = parseInt($(".target").css('top'));
+		var targetLeft = parseInt($(".target").css('left'));
+		var targetBot = parseInt($(".target").css('top')) + 20;
+		var targetRight = parseInt($(".target").css('left')) + 20;
+		var arrowTop = parseInt($(".arrow").css('top'));
+		var arrowLeft = parseInt($(".arrow").css('left'));
+		var arrowBot = parseInt($(".arrow").css('top')) + 20;
+		var arrowRight = parseInt($(".arrow").css('left')) + 20;
+		//alert(windowHeight);
+		//$('.box').css({height:windowHeight+"px"});
+		targeta();
+		$(".stop").click(function(){
+			$('.arrow').css({left:0});
+		});
+		$(".go, .box").click(function(){
+			$('.target').removeClass('after');
+			$('.arrow').css({left:0});
+			runa();
+		});
+		$('.barbox').hover(function(){
+			speed =$(this).attr('title');
+			$(this).addClass('selected');
+			$(this).nextAll('.barbox').addClass('selected');
+			$(this).prevAll('.barbox').removeClass('selected');
+			//alert(speed);
+		});
+		function runa(){
+		targetTop = parseInt($(".target").css('top'));
+		targetLeft = parseInt($(".target").css('left'));
+		targetBot = parseInt($(".target").css('top')) + 40;
+		targetRight = parseInt($(".target").css('left')) + 40;
+		arrowTop = parseInt($(".arrow").css('top'));
+		arrowLeft = parseInt($(".arrow").css('left'));
+		arrowBot = parseInt($(".arrow").css('top')) + 20;
+		arrowRight = parseInt($(".arrow").css('left')) + 20;
+			if(((arrowTop>=targetTop && arrowLeft>=targetLeft) && (arrowTop<=targetBot && arrowLeft<=targetRight)) || ((arrowBot>=targetTop && arrowRight>=targetLeft) && (arrowTop<=targetBot && arrowRight<=targetRight)) || ((arrowBot>=targetTop && arrowLeft>=targetLeft) && (arrowBot<=targetBot && arrowLeft<=targetRight))) {
+				var currentScore = parseInt($(".score").html());
+				$(".score").html(currentScore + 1);
+				//$('.arrow').css({left:0});
+				$('.target').addClass('after');
+				$('.arrow').animate({left:"+="+speed }, 1, runb);
+			}else{
+				if(arrowLeft <= windowWidth-40)
+				{
+				$('.arrow').animate({left:"+="+speed }, 1, runb);
+				}else{
+					//$('.arrow').css({left:0});
+				}
+			}
+		};
+		function runb(){
+		$('.arrow').animate({left:"+="+speed }, 1, runa);
+		};
+		function targeta(){
+		$('.target').animate({top:windowHeight-42}, 4000, targetb);
+		};
+		function targetb(){
+		$('.target').animate({top:0}, 4000, targeta);
+		};
+});
+
+</script>
+		<span class="scoreBox">Score: <span class="score">0</span></span>
+    <div class="box">
+        <div class="speedBar">
+            <div class="barbox" title="10"></div>
+            <div class="barbox" title="9"></div>
+            <div class="barbox" title="8"></div>
+            <div class="barbox" title="7"></div>
+            <div class="barbox" title="6"></div>
+            <div class="barbox" title="5"></div>
+            <div class="barbox" title="4"></div>
+            <div class="barbox" title="3"></div>
+            <div class="barbox" title="2"></div>
+            <div class="barbox" title="1"></div>
+        </div>
+        <div class="arrow">
+        	
+        </div>
+        <div class="target">
+        </div>
+    </div>
+        </div>
+
+        <!-- Place your model files here -->
+        <div id="sencha-models">
+            <script type="text/javascript" src="app/models/Search.js"></script>
+
+        </div>
+
+        <!-- Place your controller files here -->
+        <div id="sencha-controllers">
+            <script type="text/javascript" src="app/controllers/searches.js"></script>
+
+        </div>
+
+        <!-- Place your store files here -->
+        <div id="sencha-controllers">
+            <script type="text/javascript" src="app/stores/Searches.js"></script>
+
+        </div>
+    </div>
+</body>
+</html>
